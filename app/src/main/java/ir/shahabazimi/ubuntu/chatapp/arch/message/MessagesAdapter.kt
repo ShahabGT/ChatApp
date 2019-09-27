@@ -51,8 +51,8 @@ class MessagesAdapter(private val ctx:Context) :PagedListAdapter<MessageItem,Mes
         val item=getItem(position)
         if(item!=null){
             holder.message.text=Base64.decode(item.body,Base64.DEFAULT).toString(charset("UTF-8"))
-            holder.time.text=item.date.substring(11,16)
-            if(item.username.toLowerCase(Locale.ENGLISH)==username?.toLowerCase(Locale.ENGLISH)){
+            holder.time.text=item.date?.substring(11,16)
+            if(item.username?.toLowerCase(Locale.ENGLISH)==username?.toLowerCase(Locale.ENGLISH)){
                 holder.card.gravity=Gravity.RIGHT
                 holder.avatar.visibility=View.GONE
                 holder.constraint.background=ctx.resources.getDrawable(R.drawable.shape_me)
@@ -60,7 +60,7 @@ class MessagesAdapter(private val ctx:Context) :PagedListAdapter<MessageItem,Mes
                 holder.card.gravity=Gravity.LEFT
                 holder.avatar.visibility=View.VISIBLE
                 holder.constraint.background=ctx.resources.getDrawable(R.drawable.shape_other)
-                holder.avatar.setImageURI(Uri.parse("https://shahabazimi.ir/chatapp/avatars/${item.username}.jpg"))
+                holder.avatar.setImageURI(Uri.parse("https://radical-app.ir/chatapp/avatars/${item.username?.toLowerCase(Locale.ENGLISH)}.jpg"))
             }
         }
     }

@@ -4,23 +4,22 @@ import androidx.paging.PagedList
 import ir.shahabazimi.ubuntu.chatapp.data.RetrofitClient
 import ir.shahabazimi.ubuntu.chatapp.enqueue
 import ir.shahabazimi.ubuntu.chatapp.room.MyRoomDatabase
-import java.util.concurrent.Executors
 
-class MessageBoundry(private val db:MyRoomDatabase) :PagedList.BoundaryCallback<MessageItem>(){
+class MessageBoundry(private val db: MyRoomDatabase) : PagedList.BoundaryCallback<MessageItem>() {
 
     override fun onZeroItemsLoaded() {
 
         RetrofitClient.getInstance().getApi().getMessages()
-            .enqueue{
-                onResponse={r->
-                    if(r.isSuccessful)
-                    repeat(r.body()!!.data.size){
-                        db.myDao().insert(r.body()!!.data[it])
-                    }
+            .enqueue {
+                onResponse = { r ->
+                    if (r.isSuccessful)
+                        repeat(r.body()!!.data.size) {
+                            db.myDao().insert(r.body()!!.data[it])
+                        }
 
                 }
 
-                onFailure={
+                onFailure = {
 
 
                 }
@@ -30,17 +29,20 @@ class MessageBoundry(private val db:MyRoomDatabase) :PagedList.BoundaryCallback<
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: MessageItem) {
-        RetrofitClient.getInstance().getApi().getMessages(start = itemAtEnd.key!!.toInt())
-            .enqueue{
-                onResponse={r->
-                    if(r.isSuccessful)
-                    repeat(r.body()!!.data.size){
-                        db.myDao().insert(r.body()!!.data[it])
-                    }
+        var key = 0
+        if (itemAtEnd.key != null)
+            key = itemAtEnd.key.toInt()
+        RetrofitClient.getInstance().getApi().getMessages(start = key)
+            .enqueue {
+                onResponse = { r ->
+                    if (r.isSuccessful)
+                        repeat(r.body()!!.data.size) {
+                            db.myDao().insert(r.body()!!.data[it])
+                        }
 
                 }
 
-                onFailure={
+                onFailure = {
 
 
                 }

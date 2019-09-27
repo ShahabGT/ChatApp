@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 
 class RetrofitClient{
-    private val baseUrl="https://shahabazimi.ir/chatapp/"
+    private val baseUrl="https://radical-app.ir/chatapp/"
     private var retrofit: Retrofit
 
     init {

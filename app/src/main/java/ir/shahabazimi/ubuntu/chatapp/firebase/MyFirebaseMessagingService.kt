@@ -56,16 +56,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         }
 
-
     }
 
     override fun onNewToken(p0: String) {
-        MySharedPreference.getInstance(this).setFBToken(p0)
         super.onNewToken(p0)
+        MySharedPreference.getInstance(this).setFBToken(p0)
     }
 
     private fun downloadAvatar(title: String, message: String,username:String){
-        val imageRequest = ImageRequest.fromUri("https://shahabazimi.ir/chatapp/avatars/$username.jpg")
+        val imageRequest = ImageRequest.fromUri("https://radical-app.ir/chatapp/avatars/${username.toLowerCase(Locale.ENGLISH)}.jpg")
         val imagePipeline = Fresco.getImagePipeline()
         val dataSource = imagePipeline.fetchDecodedImage(imageRequest, null)
         dataSource.subscribe(object :BaseBitmapDataSubscriber(){

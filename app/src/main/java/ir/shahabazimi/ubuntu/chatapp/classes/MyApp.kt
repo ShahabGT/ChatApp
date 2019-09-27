@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseApp
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import androidx.core.provider.FontRequest
+import com.google.firebase.messaging.FirebaseMessaging
 import ir.shahabazimi.ubuntu.chatapp.R
 
 
@@ -19,6 +20,7 @@ class MyApp:Application(){
         super.onCreate()
         Fresco.initialize(this)
     //    FirebaseApp.initializeApp(this)
+        FirebaseMessaging.getInstance().isAutoInitEnabled=true
 
         val fontRequest = FontRequest(
             "com.google.android.gms.fonts",

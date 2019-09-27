@@ -57,6 +57,8 @@ class LoginFragment : Fragment() {
                         token = FirebaseInstanceId.getInstance().token!!
                     loginBtn.isEnabled=false
                     login(u, p, token)
+                    FirebaseMessaging.getInstance().subscribeToTopic("chatapp_1")
+
 
 
                 }

@@ -238,7 +238,7 @@ class RegisterFragment : Fragment() {
                         MySharedPreference.getInstance(context!!)
                             .setAccessToken(it.body()?.accessToken!!)
                         MySharedPreference.getInstance(context!!).setIsLogin()
-                        FirebaseMessaging.getInstance().subscribeToTopic("chatapp_users")
+                        FirebaseMessaging.getInstance().subscribeToTopic("chatapp_1")
                         Navigation.findNavController(v)
                             .navigate(R.id.action_registerFragment_to_mainActivity)
                         activity?.finish()
@@ -248,7 +248,7 @@ class RegisterFragment : Fragment() {
 
                         Toast.makeText(
                             context, when (it.code()) {
-                                409 -> "user exists"
+                                409 -> "username/email exists"
                                 else -> "error! try again"
                             }, Toast.LENGTH_LONG
                         ).show()
