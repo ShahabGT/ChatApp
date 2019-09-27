@@ -1,8 +1,6 @@
 package ir.shahabazimi.ubuntu.chatapp.fragments
 
 
-import MySharedPreference
-import MyUtils
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -31,6 +29,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import ir.shahabazimi.ubuntu.chatapp.R
+import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
+import ir.shahabazimi.ubuntu.chatapp.classes.MyUtils
 import ir.shahabazimi.ubuntu.chatapp.data.RetrofitClient
 import ir.shahabazimi.ubuntu.chatapp.dialogs.ImageselectDialog
 import ir.shahabazimi.ubuntu.chatapp.enqueue
@@ -47,7 +47,7 @@ class RegisterFragment : Fragment() {
     private lateinit var registerBtn: MaterialButton
     private lateinit var image: SimpleDraweeView
     private lateinit var path: Uri
-    private var bitmap: Bitmap?=null
+    private var bitmap: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +61,7 @@ class RegisterFragment : Fragment() {
     }
 
 
+    @Suppress("DEPRECATION")
     private fun init() {
         registerBtn = v.findViewById(R.id.register_register)
         registerBtn.setOnClickListener {
@@ -94,7 +95,7 @@ class RegisterFragment : Fragment() {
                         if (token.isBlank())
                             token = FirebaseInstanceId.getInstance().token!!
                         registerBtn.isEnabled = false
-                        register(n, u, e, p, token);
+                        register(n, u, e, p, token)
 
 
                     }
@@ -107,31 +108,35 @@ class RegisterFragment : Fragment() {
 
 
         }
-        image = v.findViewById(R.id.register_logo);
+        image = v.findViewById(R.id.register_logo)
 
         v.findViewById<ImageView>(R.id.register_logo_cam).setOnClickListener {
 
-            ImageselectDialog(context!!){option->
-                if(option== ImageSelect.Camera) {
-                    if(checkPermission()!= PackageManager.PERMISSION_GRANTED){
-                        if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)){
-                          Toast.makeText(context,"to select from camera we need this permission",Toast.LENGTH_LONG).show()
+            ImageselectDialog(context!!) { option ->
+                if (option == ImageSelect.Camera) {
+                    if (checkPermission() != PackageManager.PERMISSION_GRANTED) {
+                        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                            Toast.makeText(
+                                context,
+                                "to select from camera we need this permission",
+                                Toast.LENGTH_LONG
+                            ).show()
                             requestPermission()
-                        }else if(!MySharedPreference.getInstance(context!!).getCameraPermission()){
+                        } else if (!MySharedPreference.getInstance(context!!).getCameraPermission()) {
                             requestPermission()
                             MySharedPreference.getInstance(context!!).setCameraPermission()
-                        }else{
+                        } else {
                             val intent = Intent()
-                            intent.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri =Uri.fromParts("package",activity?.packageName,null);
-                            intent.data=uri
-                            startActivity(intent);
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts("package", activity?.packageName, null)
+                            intent.data = uri
+                            startActivity(intent)
                         }
 
-                    }else{
+                    } else {
                         selectFromCamera()
                     }
-                }else
+                } else
                     selectFromGallery()
             }.show()
         }
@@ -139,9 +144,10 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun checkPermission()= checkSelfPermission(context!!, Manifest.permission.CAMERA)
+    private fun checkPermission() = checkSelfPermission(context!!, Manifest.permission.CAMERA)
 
-    private fun requestPermission()= requestPermissions(Array(1){Manifest.permission.CAMERA},123)
+    private fun requestPermission() =
+        requestPermissions(Array(1) { Manifest.permission.CAMERA }, 123)
 
 
     override fun onRequestPermissionsResult(
@@ -151,8 +157,8 @@ class RegisterFragment : Fragment() {
     ) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode==123){
-            if(grantResults.size>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 123) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 selectFromCamera()
             }
         }
@@ -168,7 +174,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun selectFromCamera() {
-
 
 
         val intent = Intent()
@@ -195,7 +200,7 @@ class RegisterFragment : Fragment() {
 
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
-        startActivityForResult(Intent.createChooser(intent, "select an image"), 596);
+        startActivityForResult(Intent.createChooser(intent, "select an image"), 596)
     }
 
     @Throws(IOException::class)
@@ -219,8 +224,8 @@ class RegisterFragment : Fragment() {
         password: String,
         token: String
     ) {
-        var image=""
-        if(bitmap!=null)
+        var image = ""
+        if (bitmap != null)
             image = toBase64(bitmap!!)
 
 
@@ -268,6 +273,7 @@ class RegisterFragment : Fragment() {
     }
 
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (resultCode == RESULT_OK) {
@@ -285,7 +291,7 @@ class RegisterFragment : Fragment() {
                         .setFixAspectRatio(true)
                         .setMaxCropResultSize(1000, 1000)
                         .setMinCropResultSize(100, 100)
-                        .start(context!!, this);
+                        .start(context!!, this)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -304,7 +310,7 @@ class RegisterFragment : Fragment() {
                         .setFixAspectRatio(true)
                         .setMaxCropResultSize(1000, 1000)
                         .setMinCropResultSize(100, 100)
-                        .start(context!!, this);
+                        .start(context!!, this)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -313,19 +319,18 @@ class RegisterFragment : Fragment() {
 
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data);
+            val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
                 try {
                     bitmap =
-                        MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri);
-                        image.setImageURI(resultUri)
+                        MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
+                    image.setImageURI(resultUri)
 
 
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             }
         }
     }

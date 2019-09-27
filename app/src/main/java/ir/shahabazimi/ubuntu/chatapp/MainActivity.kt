@@ -1,10 +1,8 @@
 package ir.shahabazimi.ubuntu.chatapp
 
-import MySharedPreference
 import android.os.Bundle
 import android.util.Base64
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.emoji.widget.EmojiEditText
 import androidx.lifecycle.Observer
@@ -18,28 +16,30 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.shahabazimi.ubuntu.chatapp.arch.message.MessageItem
 import ir.shahabazimi.ubuntu.chatapp.classes.MyApp
+import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
+import ir.shahabazimi.ubuntu.chatapp.classes.MyUtils
 import ir.shahabazimi.ubuntu.chatapp.data.RetrofitClient
 import ir.shahabazimi.ubuntu.chatapp.room.MyRoomDatabase
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val message: EmojiEditText by bind(R.id.main_message, this)
-    private val send: ImageView by bind(R.id.main_send, this)
-    private val recycler: RecyclerView by bind(R.id.main_recycler, this)
+    private val message: EmojiEditText by bind(R.id.main_message)
+    private val send: ImageView by bind(R.id.main_send)
+    private val recycler: RecyclerView by bind(R.id.main_recycler)
     private val db = MyRoomDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
         onClicks()
-        showdata()
+        showData()
     }
 
     override fun onResume() {
         super.onResume()
         MyApp.activityResumed()
-        MyUtils.removeNotification(this);
+        MyUtils.removeNotification(this)
     }
 
     override fun onPause() {
@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showdata(){
+    @Suppress("UNCHECKED_CAST")
+    private fun showData(){
         val db=MyRoomDatabase.getInstance(this)
 
         val viewModel=ViewModelProviders.of(this, object :ViewModelProvider.Factory{

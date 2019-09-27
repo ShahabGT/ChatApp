@@ -2,7 +2,6 @@ package ir.shahabazimi.ubuntu.chatapp.classes
 
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.google.firebase.FirebaseApp
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import androidx.core.provider.FontRequest

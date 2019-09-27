@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
-import ir.shahabazimi.ubuntu.chatapp.room.MyDao
 import ir.shahabazimi.ubuntu.chatapp.room.MyRoomDatabase
 
 
@@ -18,13 +17,13 @@ class MessagesViewModel(db:MyRoomDatabase) :ViewModel(){
             .setPageSize(10)
             .build()
 
-        val b = MessageBoundry(db)
+        val b = MessageBoundary(db)
 
         //itemPagedList = LivePagedListBuilder(messagesDataSourceFactory!!,config).setBoundaryCallback(b).build()
         val dataSourceFactory = db.myDao().selectPaged()
         itemPagedList = LivePagedListBuilder(dataSourceFactory,config).setBoundaryCallback(b).build()
     }
 
-    fun invalidateData() = messagesDataSourceFactory?.invalidateDatasource()
+  //  fun invalidateData() = messagesDataSourceFactory?.invalidateDatasource()
 
 }

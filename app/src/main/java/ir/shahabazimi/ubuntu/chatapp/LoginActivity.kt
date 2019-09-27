@@ -1,6 +1,5 @@
 package ir.shahabazimi.ubuntu.chatapp
 
-import MySharedPreference
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +13,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
+import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -83,11 +83,5 @@ class CallBackKt<T> : Callback<T> {
 
 }
 
-fun <T : View> Activity.bind(@IdRes id: Int, context: Activity): Lazy<T> =
-    lazy { context.findViewById<T>(id) }
-
-fun <T : View> View.bind(@IdRes id: Int, context: View): Lazy<T> =
-    lazy { context.findViewById<T>(id) }
-
-fun <T : View> Fragment.bind(@IdRes id: Int, context: View): Lazy<T> =
-    lazy { context.findViewById<T>(id) }
+fun <T : View> Activity.bind(@IdRes id: Int): Lazy<T> =
+    lazy {findViewById<T>(id) }

@@ -5,7 +5,7 @@ import ir.shahabazimi.ubuntu.chatapp.data.RetrofitClient
 import ir.shahabazimi.ubuntu.chatapp.enqueue
 import ir.shahabazimi.ubuntu.chatapp.room.MyRoomDatabase
 
-class MessageBoundry(private val db: MyRoomDatabase) : PagedList.BoundaryCallback<MessageItem>() {
+class MessageBoundary(private val db: MyRoomDatabase) : PagedList.BoundaryCallback<MessageItem>() {
 
     override fun onZeroItemsLoaded() {
 
@@ -49,9 +49,5 @@ class MessageBoundry(private val db: MyRoomDatabase) : PagedList.BoundaryCallbac
 
 
             }
-    }
-
-    override fun onItemAtFrontLoaded(itemAtFront: MessageItem) {
-        super.onItemAtFrontLoaded(itemAtFront)
     }
 }

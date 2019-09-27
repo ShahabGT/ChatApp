@@ -1,8 +1,5 @@
 package ir.shahabazimi.ubuntu.chatapp.firebase
 
-import Const
-import MySharedPreference
-import MyUtils
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -27,9 +24,10 @@ import com.google.firebase.messaging.RemoteMessage
 import ir.shahabazimi.ubuntu.chatapp.MainActivity
 import ir.shahabazimi.ubuntu.chatapp.R
 import ir.shahabazimi.ubuntu.chatapp.arch.message.MessageItem
+import ir.shahabazimi.ubuntu.chatapp.classes.Const
 import ir.shahabazimi.ubuntu.chatapp.classes.MyApp
+import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
 import ir.shahabazimi.ubuntu.chatapp.room.MyRoomDatabase
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -100,7 +98,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             builder.setLargeIcon(bitmap)
         builder.setContentText(message)
         builder.setStyle(NotificationCompat.BigTextStyle().bigText(message))
-        builder.setPriority(NotificationCompat.PRIORITY_HIGH)
+        builder.priority=NotificationCompat.PRIORITY_HIGH
         builder.setAutoCancel(true)
         builder.setContentIntent(pendingIntent)
         // builder.setSound(alarmSound, AudioManager.STREAM_NOTIFICATION)

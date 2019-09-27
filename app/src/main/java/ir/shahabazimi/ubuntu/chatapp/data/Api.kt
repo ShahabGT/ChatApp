@@ -1,16 +1,16 @@
-package ir.shahabazimi.ubuntu.chatapp.data;
+package ir.shahabazimi.ubuntu.chatapp.data
 
-import ir.shahabazimi.ubuntu.chatapp.arch.message.MessageResponse;
-import ir.shahabazimi.ubuntu.chatapp.models.JsonResponse;
-import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+import ir.shahabazimi.ubuntu.chatapp.arch.message.MessageResponse
+import ir.shahabazimi.ubuntu.chatapp.models.JsonResponse
+import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 
-public interface Api {
+interface Api {
 
     @FormUrlEncoded
     @POST("login.php")
@@ -33,14 +33,6 @@ public interface Api {
     ):Call<JsonResponse>
     //___________________________________________
 
-    @FormUrlEncoded
-    @POST("auth.php")
-    fun doAuth(
-            @Field("number")  number:String,
-            @Field("fbtoken")  FBToken:String,
-            @Field("code")  code:String
-    ):Call<JsonResponse>
-    //___________________________________________
 
     @FormUrlEncoded
     @POST("sendmessage.php")

@@ -21,7 +21,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     return instance
 
                 }
-
     }
 
 abstract fun myDao():MyDao

@@ -16,11 +16,11 @@ class MessagesDataSourceFactory : DataSource.Factory<Int, MessageItem>() {
         return messagesDataSource
     }
 
-    fun invalidateDatasource() {
-            messagesDataSource.isInvalid
-        create()
-    }
+//    fun invalidateDatasource() {
+//            messagesDataSource.isInvalid
+//        create()
+//    }
 
-    fun getItemLiveDataSource()= itemLiveDataSource
+   // fun getItemLiveDataSource()= itemLiveDataSource
 
 }

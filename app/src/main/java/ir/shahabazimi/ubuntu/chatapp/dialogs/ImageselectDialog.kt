@@ -13,8 +13,6 @@ class ImageselectDialog(context:Context,var myInterface: (ImageSelect)->Unit) :D
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_imageselect)
 
-
-
         findViewById<LinearLayout>(R.id.imageselect_camera).setOnClickListener {
             myInterface.invoke(ImageSelect.Camera)
             dismiss()

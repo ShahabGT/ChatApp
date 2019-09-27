@@ -1,9 +1,8 @@
+package ir.shahabazimi.ubuntu.chatapp.classes
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -12,13 +11,6 @@ import java.lang.Exception
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
-
-
-
 
 
 class MyUtils {
@@ -61,13 +53,13 @@ class MyUtils {
             }catch(e:Exception){}
         }
 
-        fun shareCode(activity: Activity,title:String){
-            val intent= Intent(Intent.ACTION_SEND)
-            intent.type="text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT,title)
-          //  activity.startActivity(Intent.createChooser(intent,activity.getString(R.string.txt_share)))
-
-        }
+//        fun shareCode(activity: Activity,title:String){
+//            val intent= Intent(Intent.ACTION_SEND)
+//            intent.type="text/plain"
+//            intent.putExtra(Intent.EXTRA_TEXT,title)
+//            activity.startActivity(Intent.createChooser(intent,activity.getString(R.string.txt_share)))
+//
+//        }
         fun removeNotification(context: Context){
             val notificationManager:NotificationManager=context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.cancel(Const.NOTIFICATION_ID)

@@ -1,8 +1,6 @@
 package ir.shahabazimi.ubuntu.chatapp.fragments
 
 
-import MySharedPreference
-import MyUtils
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +12,9 @@ import androidx.navigation.Navigation
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import ir.shahabazimi.ubuntu.chatapp.R
-import ir.shahabazimi.ubuntu.chatapp.bind
+import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
+import ir.shahabazimi.ubuntu.chatapp.classes.MyUtils
 import ir.shahabazimi.ubuntu.chatapp.data.RetrofitClient
 import ir.shahabazimi.ubuntu.chatapp.enqueue
 
@@ -37,6 +35,7 @@ class LoginFragment : Fragment() {
         return v
     }
 
+    @Suppress("DEPRECATION")
     private fun init() {
         loginBtn = v.findViewById(R.id.login_login)
         v.findViewById<MaterialButton>(R.id.login_register).setOnClickListener {

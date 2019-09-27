@@ -11,15 +11,14 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.shahabazimi.ubuntu.chatapp.R
-import kotlinx.android.synthetic.main.row_message.view.*
 import java.util.*
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Base64
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.transition.Visibility
 import com.facebook.drawee.view.SimpleDraweeView
+import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
 
 
 class MessagesAdapter(private val ctx:Context) :PagedListAdapter<MessageItem,MessagesAdapter.ViewHolder>(diffCallback){
@@ -46,6 +45,8 @@ class MessagesAdapter(private val ctx:Context) :PagedListAdapter<MessageItem,Mes
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder=
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_message,parent,false))
 
+    @Suppress("DEPRECATION")
+    @SuppressLint("RtlHardcoded")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val item=getItem(position)
