@@ -68,7 +68,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(username: String, password: String, token: String) {
-
+        MyUtils.hideKeyboard(activity!!)
         RetrofitClient.getInstance().getApi()
             .doLogin(username, password, token)
             .enqueue {

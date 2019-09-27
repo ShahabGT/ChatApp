@@ -3,7 +3,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class MySharedPreference private constructor(context: Context){
-    private val sp:SharedPreferences=context.getSharedPreferences("RadicalPreference",0)
+    private val sp:SharedPreferences=context.getSharedPreferences("ChatAppPreference",0)
     private val editor:SharedPreferences.Editor = sp.edit()
 
     companion object {

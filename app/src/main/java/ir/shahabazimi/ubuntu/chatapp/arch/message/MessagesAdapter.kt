@@ -16,6 +16,8 @@ import java.util.*
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Base64
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.transition.Visibility
 import com.facebook.drawee.view.SimpleDraweeView
 
@@ -47,17 +49,17 @@ class MessagesAdapter(private val ctx:Context) :PagedListAdapter<MessageItem,Mes
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val item=getItem(position)
-
         if(item!=null){
             holder.message.text=Base64.decode(item.body,Base64.DEFAULT).toString(charset("UTF-8"))
+            holder.time.text=item.date.substring(11,16)
             if(item.username.toLowerCase(Locale.ENGLISH)==username?.toLowerCase(Locale.ENGLISH)){
                 holder.card.gravity=Gravity.RIGHT
                 holder.avatar.visibility=View.GONE
-                holder.message.background=ctx.resources.getDrawable(R.drawable.shape_me)
+                holder.constraint.background=ctx.resources.getDrawable(R.drawable.shape_me)
             }else{
                 holder.card.gravity=Gravity.LEFT
                 holder.avatar.visibility=View.VISIBLE
-                holder.message.background=ctx.resources.getDrawable(R.drawable.shape_other)
+                holder.constraint.background=ctx.resources.getDrawable(R.drawable.shape_other)
                 holder.avatar.setImageURI(Uri.parse("https://shahabazimi.ir/chatapp/avatars/${item.username}.jpg"))
             }
         }
@@ -71,7 +73,9 @@ class MessagesAdapter(private val ctx:Context) :PagedListAdapter<MessageItem,Mes
     class ViewHolder(v:View):RecyclerView.ViewHolder(v){
 
          var message:EmojiTextView = v.findViewById(R.id.row_message)
+         var time: TextView = v.findViewById(R.id.row_time)
          var card:LinearLayout = v.findViewById(R.id.row_card)
+         var constraint:ConstraintLayout = v.findViewById(R.id.row_constraint)
          var avatar:SimpleDraweeView = v.findViewById(R.id.row_avatar)
 
 

@@ -7,30 +7,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
         android:layout_marginTop="3dp"
+        android:layout_marginRight="6dp"
         android:layout_marginBottom="3dp"
         android:gravity="left|top">
 
     <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/row_avatar"
-            app:placeholderImage="@drawable/avatar"
             android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="4dp"
-            app:roundAsCircle="true"
-            android:layout_height="40dp"/>
+            app:placeholderImage="@drawable/avatar"
+            app:roundAsCircle="true" />
 
-    <androidx.emoji.widget.EmojiTextView
-            android:id="@+id/row_message"
-            style="@style/TextAppearance.AppCompat.Medium"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/row_constraint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_other"
-            android:maxWidth="250dp"
-            android:padding="12dp"
-            android:text="asdasdasd"
-            android:textColor="@android:color/white"
-            android:textDirection="anyRtl" />
+            android:background="@drawable/shape_other">
+
+        <androidx.emoji.widget.EmojiTextView
+                android:id="@+id/row_message"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:maxWidth="250dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="6dp"
+                android:text="asdasdasd"
+                android:textColor="@android:color/white"
+                android:textDirection="anyRtl"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/row_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/row_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:fontFamily="@font/ubuntu"
+                android:text="44:55"
+                android:textColor="@android:color/white"
+                android:gravity="right"
+                app:layout_constraintLeft_toRightOf="@id/row_message"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/row_message" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         layoutManager.reverseLayout=true
         layoutManager.stackFromEnd=true
         recycler.layoutManager=layoutManager
-        recycler.itemAnimator=DefaultItemAnimator()
         recycler.scrollToPosition(0)
         recycler.addOnLayoutChangeListener{
             _,_,_,_,b,_,_,_,ob->
@@ -82,13 +81,12 @@ class MainActivity : AppCompatActivity() {
             val user = MySharedPreference.getInstance(this).getUser()
             val body = message.text.toString().trim()
             if (body.isNotBlank()) {
+                recycler.scrollToPosition(0)
                 message.setText("")
                 RetrofitClient.getInstance().getApi().sendMessage(user, Base64.encodeToString(body.toByteArray(
                     charset("UTF-8")),Base64.DEFAULT))
                     .enqueue {
                         onResponse = {
-                            if(it.isSuccessful)
-                                recycler.scrollToPosition(0)
                         }
                         onFailure = {
                         }

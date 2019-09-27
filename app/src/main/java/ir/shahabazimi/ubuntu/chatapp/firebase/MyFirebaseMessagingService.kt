@@ -8,12 +8,20 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.util.Base64
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.facebook.common.executors.UiThreadImmediateExecutorService
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequest
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import ir.shahabazimi.ubuntu.chatapp.MainActivity
@@ -33,17 +41,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val data = m.data
 
-        val date = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).format(Date(m.sentTime))
-
         val item =
-            MessageItem(data["rowid"]!!.toInt(), data["body"]!!, null, date, data["sender"]!!)
+            MessageItem(data["rowid"]!!.toInt(), data["body"]!!, null, data["date"]!!, data["sender"]!!)
 
         MyRoomDatabase.getInstance(this)!!.myDao().insert(item)
 
         if (data["sender"]!! != MySharedPreference.getInstance(this).getUser()) {
             if (!MyApp.isActivityVisible()) {
                 val text = Base64.decode(data["body"]!!, Base64.DEFAULT).toString(charset("UTF-8"))
-                createNotification(data["sender"]!!, text)
+
+
+                downloadAvatar(data["sender"]!!, text,data["sender"]!!)
             }
 
         }
@@ -56,8 +64,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(p0)
     }
 
+    private fun downloadAvatar(title: String, message: String,username:String){
+        val imageRequest = ImageRequest.fromUri("https://shahabazimi.ir/chatapp/avatars/$username.jpg")
+        val imagePipeline = Fresco.getImagePipeline()
+        val dataSource = imagePipeline.fetchDecodedImage(imageRequest, null)
+        dataSource.subscribe(object :BaseBitmapDataSubscriber(){
+            override fun onNewResultImpl(bitmap: Bitmap?) {
+                createNotification(title,message,bitmap)
+            }
 
-    private fun createNotification(title: String, message: String) {
+            override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+                createNotification(title,message,null)
+
+            }
+
+        },UiThreadImmediateExecutorService.getInstance())
+    }
+
+
+    private fun createNotification(title: String, message: String,bitmap: Bitmap?) {
 
         val intent = Intent(this, MainActivity::class.java)
         //intent.putExtra("notidata", intentValue)
@@ -70,10 +95,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         builder.setSmallIcon(R.mipmap.ic_launcher)
         builder.setContentTitle(title)
-        builder.setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+        if(bitmap==null)
+            builder.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.avatar))
+        else
+            builder.setLargeIcon(bitmap)
         builder.setContentText(message)
         builder.setStyle(NotificationCompat.BigTextStyle().bigText(message))
-        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH)
         builder.setAutoCancel(true)
         builder.setContentIntent(pendingIntent)
         // builder.setSound(alarmSound, AudioManager.STREAM_NOTIFICATION)
