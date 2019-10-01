@@ -9,7 +9,7 @@ import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
 
-class RetrofitClient{
+class RetrofitClient private constructor(){
     private val baseUrl="https://radical-app.ir/chatapp/"
     private var retrofit: Retrofit
 
@@ -33,13 +33,7 @@ class RetrofitClient{
     }
 
     companion object{
-        private var instance:RetrofitClient?=null
-
-        fun getInstance():RetrofitClient{
-            if(instance==null)
-                instance=RetrofitClient()
-            return instance!!
-        }
+        val instance=RetrofitClient()
     }
 
     fun getApi(): Api {

@@ -7,10 +7,14 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.view.inputmethod.InputMethodManager
-import java.lang.Exception
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import android.widget.Toast
+import android.content.ClipData
+import android.content.ClipboardManager
+
+
 
 
 class MyUtils {
@@ -20,9 +24,9 @@ class MyUtils {
         @Suppress("DEPRECATION")
         fun isInternetAvailable(context: Context): Boolean {
             var result = false
-            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                cm?.run {
+                cm.run {
                     cm.getNetworkCapabilities(cm.activeNetwork)?.run {
                         result = when {
                             hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
@@ -33,24 +37,25 @@ class MyUtils {
                     }
                 }
             } else {
-                cm?.run {
+                cm.run {
                     cm.activeNetworkInfo?.run {
-                        if (type == ConnectivityManager.TYPE_WIFI) {
+                        if (type == ConnectivityManager.TYPE_WIFI ||type == ConnectivityManager.TYPE_MOBILE )
                             result = true
-                        } else if (type == ConnectivityManager.TYPE_MOBILE) {
-                            result = true
-                        }
                     }
                 }
             }
             return result
         }
 
-        fun hideKeyboard(activity: Activity){
-                val inptMng : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            try {
-                inptMng.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }catch(e:Exception){}
+        fun hideKeyboard(activity: Activity?){
+            if(activity!=null) {
+                val inptMng: InputMethodManager =
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inptMng.hideSoftInputFromWindow(
+                    activity.currentFocus!!.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
+            }
         }
 
 //        fun shareCode(activity: Activity,title:String){
@@ -82,6 +87,16 @@ class MyUtils {
                 res = false
             }
             return res
+        }
+
+        fun copyToClipBoard(context:Context,text:String){
+            val clipboardManager =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData =
+                ClipData.newPlainText("message",text)
+                clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(context, "copied!", Toast.LENGTH_SHORT)
+                .show()
         }
 
     }

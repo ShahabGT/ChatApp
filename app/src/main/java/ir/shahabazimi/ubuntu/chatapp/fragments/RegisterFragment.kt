@@ -231,7 +231,7 @@ class RegisterFragment : Fragment() {
 
 
         MyUtils.hideKeyboard(activity!!)
-        RetrofitClient.getInstance().getApi()
+        RetrofitClient.instance.getApi()
             .doRegister(name, username, email, password, token, image)
             .enqueue {
                 onResponse = {

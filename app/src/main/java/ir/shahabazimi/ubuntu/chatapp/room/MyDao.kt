@@ -13,9 +13,13 @@ interface MyDao {
     @Query("SELECT * FROM messages ORDER BY date DESC")
     fun selectPaged(): DataSource.Factory<Int, MessageItem>
 
-
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item:MessageItem)
+
+    @Query("delete from messages where id=:id")
+    fun delete(id:Int)
+
+    @Query("SELECT * FROM messages where id=:id")
+    fun select(id:Int): MessageItem
 
 }

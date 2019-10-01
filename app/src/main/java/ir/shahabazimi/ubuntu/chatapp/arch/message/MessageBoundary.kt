@@ -9,7 +9,7 @@ class MessageBoundary(private val db: MyRoomDatabase) : PagedList.BoundaryCallba
 
     override fun onZeroItemsLoaded() {
 
-        RetrofitClient.getInstance().getApi().getMessages()
+        RetrofitClient.instance.getApi().getMessages()
             .enqueue {
                 onResponse = { r ->
                     if (r.isSuccessful)
@@ -32,7 +32,8 @@ class MessageBoundary(private val db: MyRoomDatabase) : PagedList.BoundaryCallba
         var key = 0
         if (itemAtEnd.key != null)
             key = itemAtEnd.key.toInt()
-        RetrofitClient.getInstance().getApi().getMessages(start = key)
+
+        RetrofitClient.instance.getApi().getMessages(start = key)
             .enqueue {
                 onResponse = { r ->
                     if (r.isSuccessful)

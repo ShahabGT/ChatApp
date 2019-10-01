@@ -7,14 +7,12 @@ class MySharedPreference private constructor(context: Context){
     private val sp:SharedPreferences=context.getSharedPreferences("ChatAppPreference",0)
     private val editor:SharedPreferences.Editor = sp.edit()
 
-    companion object {
-        private var instance:MySharedPreference?=null
 
-        fun getInstance(context: Context):MySharedPreference{
-            if(instance==null)
-                instance=MySharedPreference(context)
-            return instance!!
-        }
+    companion object {
+        @Volatile private var instance:MySharedPreference?=null
+
+        fun getInstance(context: Context):MySharedPreference=
+            instance ?: synchronized(this){ instance?: MySharedPreference(context).also  { instance=it }}
     }
 
     fun clear()=sp.edit().clear().apply()

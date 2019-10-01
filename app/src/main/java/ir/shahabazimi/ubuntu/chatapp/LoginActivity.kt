@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
@@ -51,9 +50,8 @@ class LoginActivity : AppCompatActivity() {
                     return@OnCompleteListener
 
                 val token = task.result?.token
-                if (token?.isNotBlank()!!)
-                    MySharedPreference.getInstance(this).setFBToken(token)
-
+                if (token.isNullOrBlank())
+                    MySharedPreference.getInstance(this).setFBToken(token!!)
             })
 
 

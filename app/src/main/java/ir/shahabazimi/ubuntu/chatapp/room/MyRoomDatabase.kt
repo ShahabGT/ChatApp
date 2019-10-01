@@ -11,16 +11,11 @@ import ir.shahabazimi.ubuntu.chatapp.arch.message.MessageItem
 abstract class MyRoomDatabase : RoomDatabase() {
 
     companion object{
-        private var instance:MyRoomDatabase?=null
-                fun getInstance(ctx:Context):MyRoomDatabase?{
-                    if(instance==null)
-                        instance= Room.databaseBuilder(ctx,MyRoomDatabase::class.java,"MyDb")
-                            .allowMainThreadQueries()
-                            .build()
+       @Volatile private var instance:MyRoomDatabase?=null
 
-                    return instance
-
-                }
+        fun getInstance(ctx:Context)= instance ?: synchronized(this){
+            instance ?: Room.databaseBuilder(ctx,MyRoomDatabase::class.java,"MyDb").allowMainThreadQueries().build().also { instance=it }
+        }
     }
 
 abstract fun myDao():MyDao

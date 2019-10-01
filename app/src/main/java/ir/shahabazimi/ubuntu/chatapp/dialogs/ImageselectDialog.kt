@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import ir.shahabazimi.ubuntu.chatapp.R
 import ir.shahabazimi.ubuntu.chatapp.models.ImageSelect
 
-class ImageselectDialog(context:Context,var myInterface: (ImageSelect)->Unit) :Dialog(context){
+class ImageselectDialog(context:Context,private var myInterface: (ImageSelect)->Unit) :Dialog(context){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

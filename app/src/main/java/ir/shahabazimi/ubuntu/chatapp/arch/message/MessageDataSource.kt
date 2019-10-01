@@ -13,7 +13,7 @@ class MessageDataSource : PageKeyedDataSource<Int,MessageItem>(){
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MessageItem>
     ) {
-        RetrofitClient.getInstance().getApi()
+        RetrofitClient.instance.getApi()
             .getMessages( params.requestedLoadSize)
             .enqueue{
                 onResponse={
@@ -31,7 +31,7 @@ class MessageDataSource : PageKeyedDataSource<Int,MessageItem>(){
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MessageItem>) {
-    RetrofitClient.getInstance().getApi()
+    RetrofitClient.instance.getApi()
         .getMessages(start=params.key)
         .enqueue{
             onResponse={
