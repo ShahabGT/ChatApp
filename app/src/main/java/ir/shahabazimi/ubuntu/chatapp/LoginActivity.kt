@@ -56,8 +56,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-
-
 }
 
 fun <T> Call<T>.enqueue(callback: CallBackKt<T>.() -> Unit) {

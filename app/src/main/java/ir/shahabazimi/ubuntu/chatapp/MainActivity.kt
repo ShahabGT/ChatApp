@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
             val user = MySharedPreference.getInstance(this).getUser()
             val body = Base64.encodeToString(message.text.toString().trim().toByteArray(charset("UTF-8")), Base64.DEFAULT)
             if (body.isNotBlank()) {
+              //  db.getInstance(this).myDao().insert(MessageItem(null,body,null,null,user))
                 message.setText("")
                 RetrofitClient.instance.getApi().sendMessage(user, body)
                     .enqueue {

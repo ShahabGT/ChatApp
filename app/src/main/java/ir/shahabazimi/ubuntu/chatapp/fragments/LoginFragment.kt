@@ -17,6 +17,10 @@ import ir.shahabazimi.ubuntu.chatapp.classes.MySharedPreference
 import ir.shahabazimi.ubuntu.chatapp.classes.MyUtils
 import ir.shahabazimi.ubuntu.chatapp.data.RetrofitClient
 import ir.shahabazimi.ubuntu.chatapp.enqueue
+import ir.shahabazimi.ubuntu.chatapp.models.JsonResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginFragment : Fragment() {
 
